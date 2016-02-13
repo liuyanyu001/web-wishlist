@@ -1,6 +1,7 @@
 package com.wishlist.conf.filter;
 
 
+import com.wishlist.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AuthenticationSuccessFilter extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    @Autowired private IUserService userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
@@ -24,7 +27,7 @@ public class AuthenticationSuccessFilter extends SavedRequestAwareAuthentication
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         //UserBean userBean = userService.getUserByEmail(user.getUsername());
-        request.getSession().setAttribute("userBean", new com.wishlist.model.User("Vova", "Vova"));
+        request.getSession().setAttribute("userBean", userService.getByEmail(user.getUsername()));
 
         request.getSession().setMaxInactiveInterval((int) TimeUnit.HOURS.toSeconds(48));
         super.onAuthenticationSuccess(request, response, authentication);
