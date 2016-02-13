@@ -10,6 +10,8 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     User findByFirstName(String firstName);
 
+    User findByEmail(String email);
+
     List<User> findByLastName(String lastName);
 
     @Query(value = "{online : true}")
