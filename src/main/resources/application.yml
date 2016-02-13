@@ -4,10 +4,14 @@ spring:
 spring:
   profiles: dev
 
-data:
+  data:
     mongodb:
       port: 0
 
 ---
 spring:
    profiles: prod
+
+   data:
+    mongodb:
+          uri: mongodb://wishuser:wishpassword@ds061355.mongolab.com:61355/wishdb
