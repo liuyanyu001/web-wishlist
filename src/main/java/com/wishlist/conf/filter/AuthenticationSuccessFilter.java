@@ -26,7 +26,6 @@ public class AuthenticationSuccessFilter extends SavedRequestAwareAuthentication
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        //UserBean userBean = userService.getUserByEmail(user.getUsername());
         request.getSession().setAttribute("userBean", userService.getByEmail(user.getUsername()));
 
         request.getSession().setMaxInactiveInterval((int) TimeUnit.HOURS.toSeconds(48));
