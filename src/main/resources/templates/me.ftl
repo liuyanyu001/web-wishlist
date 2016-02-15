@@ -3,10 +3,10 @@
 <head>
     <title>Spring Boot and Thymeleaf example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet"  href="/css/main.css" />
 </head>
 <body>
 <h3>Spring Boot and Thymeleaf</h3>
-<p>Hello <span th:text="${user.firstName}" /> </p>
+<p>Hello ${user.firstName}  </p>
 </body>
 </html>

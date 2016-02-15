@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,9 +26,14 @@ public class MongoAuthProvider extends AbstractUserDetailsAuthenticationProvider
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         UserDetails loadedUser;
+        String password = Cipher.encrypt((String) authentication.getCredentials());
         try {
             com.wishlist.model.User user = userRepository.findByEmail(username);
-            loadedUser = new User(username, Cipher.encrypt(user.getPassword()), user.getRoles());
+            if (user.getPassword().equals(password)) {
+                loadedUser = new User(username, Cipher.encrypt(user.getPassword()), user.getRoles());
+            }else {
+                throw new InternalAuthenticationServiceException("Wrong user password");
+            }
         } catch (Exception repositoryProblem) {
             throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
         }

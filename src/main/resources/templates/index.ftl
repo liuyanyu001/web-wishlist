@@ -16,7 +16,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link">Login1</a>
+                            <a href="#" class="active" id="login-form-link">Login</a>
                         </div>
                         <div class="col-xs-6">
                             <a href="#" id="register-form-link">Register</a>
@@ -27,7 +27,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="login-form" th:action="@{/login}" method="post" role="form" style="display: block;">
+                            <form id="login-form" action="/login" method="post" role="form" style="display: block;">
                                 <div class="form-group">
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" />
                                 </div>
@@ -49,7 +49,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="text-center">
-                                                <a href="http://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+                                                <a href="/password/forgot" tabindex="5" class="forgot-password">Forgot Password?</a>
                                             </div>
                                         </div>
                                     </div>
