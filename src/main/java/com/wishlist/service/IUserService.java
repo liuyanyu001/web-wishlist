@@ -1,5 +1,6 @@
 package com.wishlist.service;
 
+import com.wishlist.bean.RegistrationFields;
 import com.wishlist.model.User;
 
 /**
@@ -7,6 +8,7 @@ import com.wishlist.model.User;
  */
 public interface IUserService {
     void create(String email, String password, String fName, String lName);
+    void create(RegistrationFields registrationFields);
     User getByEmail(String email);
     void clearAll();
     User getByName(String name);

@@ -1,5 +1,6 @@
 package com.wishlist.service.impl;
 
+import com.wishlist.bean.RegistrationFields;
 import com.wishlist.model.User;
 import com.wishlist.repository.UserRepository;
 import com.wishlist.service.IUserService;
@@ -21,6 +22,11 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(Cipher.encrypt(password));
         user.addRole(new SimpleGrantedAuthority("ROLE_USER"));
         userRepository.save(user);
+    }
+
+    @Override
+    public void create(RegistrationFields registrationFields) {
+        create(registrationFields.getEmail(), registrationFields.getPassword(), registrationFields.getFirstName(), registrationFields.getLastName());
     }
 
     @Override

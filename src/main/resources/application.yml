@@ -1,5 +1,8 @@
 spring:
-  profiles.active: dev
+  profiles.active: prod
+  thymeleaf:
+    cache: false
+    mode: HTML5
 ---
 spring:
   profiles: dev
