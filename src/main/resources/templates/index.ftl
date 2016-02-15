@@ -3,8 +3,8 @@
 <head>
     <title>Welcome to your wish list!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css"/>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 </head>
@@ -16,7 +16,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link">Login</a>
+                            <a href="#" class="active" id="login-form-link">Login1</a>
                         </div>
                         <div class="col-xs-6">
                             <a href="#" id="register-form-link">Register</a>
@@ -84,13 +84,13 @@
     </div>
 </div>
 
-<script th:src="@{/js/lib/jquery/jquery-2.2.0.min.js}"></script>
-<script th:src="@{/js/lib/bootstrap/bootstrap.min.js}"></script>
-<script th:src="@{/js/lib/bootstrap/bootstrap-modal.js}"></script>
-<script th:src="@{/js/lib/jquery/jquery.alert.js}"></script>
-<script th:src="@{/js/lib/jquery/jquery.confirm.js}"></script>
-<script th:src="@{/js/lib/html5.js}"></script>
-<script th:src="@{/js/main.js}"></script>
+<script src="/js/lib/jquery/jquery-2.2.0.min.js"></script>
+<script src="/js/lib/bootstrap/bootstrap.min.js"></script>
+<script src="/js/lib/bootstrap/bootstrap-modal.js"></script>
+<script src="/js/lib/jquery/jquery.alert.js"></script>
+<script src="/js/lib/jquery/jquery.confirm.js"></script>
+<script src="/js/lib/html5.js"></script>
+<script src="/js/main.js"></script>
 
 </body>
 </html>
