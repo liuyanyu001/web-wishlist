@@ -1,10 +1,17 @@
 <!DOCTYPE HTML>
-<html  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html >
 <head>
     <title>Welcome to your wish list!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="/css/ripples.css">
     <link rel="stylesheet" href="/css/main.css"/>
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.css"/>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 </head>
@@ -13,13 +20,15 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-login">
+                <img width="300" height="300"  class="center-block" src="/images/Present1.png"/>
+                <h2 align="center">Your wish list</h2>
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link">Login</a>
+                            <a href="#" class="active" id="login-form-link">Sign in</a>
                         </div>
                         <div class="col-xs-6">
-                            <a href="#" id="register-form-link">Register</a>
+                            <a href="#" id="register-form-link">Sign up</a>
                         </div>
                     </div>
                     <hr/>
@@ -35,13 +44,19 @@
                                     <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password"/>
                                 </div>
                                 <div class="form-group text-center">
-                                    <input type="checkbox" tabindex="3" class="" name="remember_me_checkbox" id="remember"/>
-                                    <label for="remember"> Remember Me</label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <label for="remember"> Remember Me</label>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" tabindex="3"  name="remember_me_checkbox" id="remember"/>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In"/>
+                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Sign In"/>
                                         </div>
                                     </div>
                                 </div>
@@ -89,6 +104,14 @@
 <script src="/js/lib/bootstrap/bootstrap-modal.js"></script>
 <script src="/js/lib/jquery/jquery.alert.js"></script>
 <script src="/js/lib/jquery/jquery.confirm.js"></script>
+<script src="/js/lib/bootstrap/material.js"></script>
+<script src="/js/lib/bootstrap/ripples.js"></script>
+ <script>
+    $(function () {
+        $.material.init();
+    });
+</script>
+
 <script src="/js/lib/html5.js"></script>
 <script src="/js/main.js"></script>
 
