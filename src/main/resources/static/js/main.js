@@ -26,7 +26,7 @@ $(function () {
 
         var onError = function (msg) {
             $.alert({title:"Registration", text:msg.responseText});
-            $("#register-form")[0].reset();
+            $("#email").blur();
         }
 
         var user = {
