@@ -17,15 +17,19 @@ public class UserServiceImpl implements IUserService {
     @Autowired private UserRepository userRepository;
 
     @Override
-    public void create(String email, String password, String fName, String lName) {
-        User user = new User(email, password, fName, lName);
-        user.setPassword(Cipher.encrypt(password));
-        user.addRole(new SimpleGrantedAuthority("ROLE_USER"));
-        userRepository.save(user);
+    public void create(String email, String password, String fName, String lName) throws Exception {
+        if (null == getByEmail(email)) {
+            User user = new User(email, password, fName, lName);
+            user.setPassword(Cipher.encrypt(password));
+            user.addRole(new SimpleGrantedAuthority("ROLE_USER"));
+            userRepository.save(user);
+        }else {
+            throw new Exception("Select another email");
+        }
     }
 
     @Override
-    public void create(RegistrationFields registrationFields) {
+    public void create(RegistrationFields registrationFields) throws Exception {
         create(registrationFields.getEmail(), registrationFields.getPassword(), registrationFields.getFirstName(), registrationFields.getLastName());
     }
 
