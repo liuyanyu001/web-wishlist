@@ -1,25 +1,26 @@
-.avatar{
+.avatar {
     width: 150px;
     height: 150px;
 }
 
-.mainnav{
+.mainnav {
     margin-bottom: 0px !important;
-    background-color: #3f51b5!important;
-    color: #ffffff!important;
-    padding-right:0px !important;
-}
-.navbar-default .navbar-brand{
-    color:white!important;
+    background-color: #3f51b5 !important;
+    color: #ffffff !important;
+    padding-right: 0px !important;
 }
 
-.navbar-default .navbar-nav > li > a{
-    color:white !important;
+.navbar-default .navbar-brand {
+    color: white !important;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white !important;
 }
 
 .profile-name {
     font-weight: bold;
-    color:#1b6d85;
+    color: #1b6d85;
 }
 
 #wrapper {
@@ -109,7 +110,7 @@
     background: none;
 }
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
     #wrapper {
         padding-left: 250px;
     }
@@ -135,4 +136,10 @@
         position: relative;
         margin-right: 0;
     }
+}
+
+.create-fab {
+    position: absolute !important;
+    top: 5%;
+    right: 5%;
 }

@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 @SpringBootApplication
-@Order(1)
 public class Application  extends SpringBootServletInitializer implements CommandLineRunner  {
 
     protected final Log logger = LogFactory.getLog(getClass());

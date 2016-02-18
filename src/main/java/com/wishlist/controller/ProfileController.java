@@ -25,4 +25,5 @@ public class ProfileController {
         map.addAttribute("user", user);
         return "settings";
     }
+
 }

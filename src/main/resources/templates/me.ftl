@@ -23,12 +23,13 @@
                 <div class="navbar navbar-default ">
                     <div class="container-fluid mainnav ">
                         <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                    data-target=".navbar-responsive-collapse">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand"  href="/">Your wish</a>
+                            <a class="navbar-brand" href="/">Your wish</a>
                         </div>
                         <div class="navbar-collapse collapse navbar-responsive-collapse">
                             <form class="navbar-form navbar-left">
@@ -69,13 +70,14 @@
                 </div>
             </header>
 
-            <div id="wrapper" >
+            <div id="wrapper">
 
                 <!-- Sidebar -->
                 <div id="sidebar-wrapper">
 
                     <ul class="sidebar-nav">
-                        <img src="https://pp.vk.me/c628222/v628222045/1dbf0/K_4HePQkPzE.jpg" class="img-thumbnail avatar center-block"
+                        <img src="https://pp.vk.me/c628222/v628222045/1dbf0/K_4HePQkPzE.jpg"
+                             class="img-thumbnail avatar center-block"
                              alt="User Image"/>
                         <div class="text-center profile-name">
                             <p>${user.firstName}(${user.login})</p>
@@ -98,29 +100,53 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h1>Main content will be here</h1>
-                                <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                                <div class="row">
+                                    <h1>Main content will be here</h1>
+                                    <p>This template has a responsive menu toggling system. The menu will appear
+                                        collapsed on smaller screens, and will appear non-collapsed on larger screens.
+                                        When toggled using the button below, the menu will appear/disappear. On small
+                                        screens, the page content will be pushed off canvas.</p>
+                                </div>
 
+                                <div class="row">
+
+                                    <div class="col-xs-6">
+
+                                        <H3 class="text-center">Wish list</H3>
+
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <H3 class="text-center">Implemented wishes</H3>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
+
                     </div>
+                    <a  class="btn   btn-fab pull-right create-fab"><i class="material-icons">create</i></a>
+
                 </div>
+
+            </div>
+
         </div>
+
     </div>
-</div>
 
 
-<script src="/js/lib/jquery/jquery-2.2.0.min.js"></script>
-<script src="/js/lib/bootstrap/bootstrap.min.js"></script>
-<script src="/js/lib/bootstrap/bootstrap-modal.js"></script>
-<script src="/js/lib/jquery/jquery.alert.js"></script>
-<script src="/js/lib/jquery/jquery.confirm.js"></script>
-<script src="/js/lib/html5.js"></script>
-<script src="/js/lib/bootstrap/material.js"></script>
-<script src="/js/lib/bootstrap/ripples.js"></script>
-<script>
-    $(function () {
-        $.material.init();
-    });</script>
+    <script src="/js/lib/jquery/jquery-2.2.0.min.js"></script>
+    <script src="/js/lib/bootstrap/bootstrap.min.js"></script>
+    <script src="/js/lib/bootstrap/bootstrap-modal.js"></script>
+    <script src="/js/lib/jquery/jquery.alert.js"></script>
+    <script src="/js/lib/jquery/jquery.confirm.js"></script>
+    <script src="/js/lib/html5.js"></script>
+    <script src="/js/lib/bootstrap/material.js"></script>
+    <script src="/js/lib/bootstrap/ripples.js"></script>
+    <script>
+        $(function () {
+            $.material.init();
+        });</script>
 </body>
 </html>
