@@ -21,7 +21,8 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-login">
                 <img width="300" height="300"  class="center-block" src="/images/Present1.png"/>
-                <h2 align="center">Your wish list</h2>
+                <h2 align="center">Wish list</h2>
+                <h4 align="center">Make a wish  come true and help someone  fulfill the dream..</h4>
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
