@@ -72,13 +72,13 @@
                             </form>
                             <form id="register-form"   role="form" style="display: none;">
                                 <div class="form-group">
+                                    <input type="text" name="userLogin" id="userLogin" tabindex="1" class="form-control" placeholder="User login" required="required" />
+                                </div>
+                                <div class="form-group">
                                     <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" required="required"  />
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="firstName" id="regUserName" tabindex="1" class="form-control" placeholder="Name" required="required"  />
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="lastName" id="userLastName" tabindex="1" class="form-control" placeholder="Last name" required="required" />
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" id="regpassword" tabindex="2" class="form-control" placeholder="Password" required="required"/>

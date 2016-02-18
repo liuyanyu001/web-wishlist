@@ -12,4 +12,5 @@ public interface IUserService {
     User getByEmail(String email);
     void clearAll();
     User getByName(String name);
+    User getByLogin(String login);
 }

@@ -12,8 +12,8 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     User findByEmail(String email);
 
-    List<User> findByLastName(String lastName);
+    User findByLogin(String login);
 
     @Query(value = "{online : true}")
-    List <User> findAllOnlyOnline();
+    List<User> findAllOnlyOnline();
 }

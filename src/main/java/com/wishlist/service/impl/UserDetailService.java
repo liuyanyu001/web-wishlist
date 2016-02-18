@@ -22,7 +22,7 @@ public class UserDetailService  implements UserDetailsService{
         //todo check for remember me auth failed logic
         UserDetails loadedUser = new User("UserNotFound", "UserNotFound", new ArrayList<>());
         try {
-            com.wishlist.model.User user = userRepository.findByEmail(s);
+            com.wishlist.model.User user = userRepository.findByLogin(s);
             loadedUser = new User(s, Cipher.encrypt(user.getPassword()), user.getRoles());
         } catch (Exception repositoryProblem) {
             //throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);

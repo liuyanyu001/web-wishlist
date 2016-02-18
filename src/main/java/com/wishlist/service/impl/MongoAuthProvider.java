@@ -28,7 +28,7 @@ public class MongoAuthProvider extends AbstractUserDetailsAuthenticationProvider
         UserDetails loadedUser;
         String password = Cipher.encrypt((String) authentication.getCredentials());
         try {
-            com.wishlist.model.User user = userRepository.findByEmail(username);
+            com.wishlist.model.User user = userRepository.findByLogin(username);
             if (user.getPassword().equals(password)) {
                 loadedUser = new User(username, Cipher.encrypt(user.getPassword()), user.getRoles());
             }else {

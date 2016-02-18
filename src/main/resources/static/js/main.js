@@ -31,7 +31,7 @@ $(function () {
 
         var user = {
             firstName: $("#regUserName").val(),
-            lastName: $("#userLastName").val(),
+            login: $("#userLogin").val(),
             password: $("#regpassword").val(),
             email: $("#email").val()
         }

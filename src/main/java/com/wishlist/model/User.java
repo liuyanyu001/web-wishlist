@@ -20,11 +20,10 @@ public class User {
     @Id
     private String id;
 
-    @Field(value = "first_name")
+    @Field(value = "name")
     private String firstName;
 
-    @Field(value = "last_name")
-    private String lastName;
+    private String login;
 
     private String password;
 
@@ -38,11 +37,11 @@ public class User {
 
     public User() {}
 
-    public User(String email, String password, String firstName, String lastName) {
+    public User(String email, String password, String firstName, String login) {
         this.password = password;
         this.email = email;
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.login = login;
     }
 
     public String getPassword() {
@@ -69,13 +68,6 @@ public class User {
         this.firstName = name;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public boolean isOnline() {
         return online;
@@ -107,16 +99,11 @@ public class User {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", online=" + online +
-                ", roles=" + roles +
-                '}';
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }
