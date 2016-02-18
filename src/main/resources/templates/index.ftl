@@ -49,7 +49,7 @@
                                             <label for="remember"> Remember Me</label>
                                         </label>
                                         <label>
-                                            <input type="checkbox" tabindex="3"  name="remember_me_checkbox" id="remember"/>
+                                            <input type="checkbox" tabindex="3"  name="remember_me_checkbox" id="remember_me_checkbox"/>
                                         </label>
                                     </div>
                                 </div>

@@ -45,15 +45,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and();
 
         http.formLogin()
-                .failureUrl("/login?error")
+                .failureUrl("/?error")
                 .defaultSuccessUrl("/")
-                .loginPage("/login")
+                .loginPage("/")
                 .successHandler(getAuthenticationSuccess())
                 .permitAll()
                 .and()
 
                 .authorizeRequests()
-                .antMatchers("/me/").authenticated()
+                .antMatchers("/profile/me/").authenticated()
                 .anyRequest().authenticated()
                 .and();
 
@@ -95,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public SavedRequestAwareAuthenticationSuccessHandler getAuthenticationSuccess() {
         AuthenticationSuccessFilter authenticationSuccess = new AuthenticationSuccessFilter();
-        authenticationSuccess.setDefaultTargetUrl("/me/");
+        authenticationSuccess.setDefaultTargetUrl("/profile/me/");
         return authenticationSuccess;
     }
 }
