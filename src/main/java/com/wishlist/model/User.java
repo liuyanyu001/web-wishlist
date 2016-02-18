@@ -15,10 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Document(collection = "users")
-public class User {
-
-    @Id
-    private String id;
+public class User extends BaseObject{
 
     @Field(value = "name")
     private String firstName;
@@ -50,14 +47,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getFirstName() {
