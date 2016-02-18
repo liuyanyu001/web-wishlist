@@ -48,7 +48,7 @@
                                     Profile
                                 </a>
                                 <a data-toggle="modal" href="/profile/settings">
-                                <i class="fa fa-cog fa-fw pull-right"></i>
+                                    <i class="fa fa-cog fa-fw pull-right"></i>
                                     Settings
                                 </a>
                             </li>
@@ -95,8 +95,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Main content will be here</h1>
-                    <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                    <h1>Set up your profile data here..</h1>
 
                 </div>
             </div>

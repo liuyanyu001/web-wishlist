@@ -20,4 +20,9 @@ public class ProfileController {
         return "me";
     }
 
+    @RequestMapping(value = "settings", method = RequestMethod.GET)
+    public String settings(@ModelAttribute(value = "userBean") User user, ModelMap map) {
+        map.addAttribute("user", user);
+        return "settings";
+    }
 }
