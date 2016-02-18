@@ -1,14 +1,12 @@
 package com.wishlist;
 
-import com.wishlist.service.IUserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -16,7 +14,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-@SpringBootApplication 
+@SpringBootApplication
+@Order(1)
 public class Application  extends SpringBootServletInitializer implements CommandLineRunner  {
 
     protected final Log logger = LogFactory.getLog(getClass());
@@ -28,7 +27,6 @@ public class Application  extends SpringBootServletInitializer implements Comman
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
     }
-
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
