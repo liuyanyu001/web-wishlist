@@ -1,6 +1,6 @@
 package com.wishlist.repository;
 
-import com.wishlist.model.Wish;
+import com.wishlist.util.auth.Wish;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

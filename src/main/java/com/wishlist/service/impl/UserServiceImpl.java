@@ -4,7 +4,7 @@ import com.wishlist.bean.RegistrationFields;
 import com.wishlist.model.User;
 import com.wishlist.repository.UserRepository;
 import com.wishlist.service.IUserService;
-import com.wishlist.util.Cipher;
+import com.wishlist.util.auth.PasswordService;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,14 @@ public class UserServiceImpl implements IUserService {
     @Autowired private UserRepository userRepository;
 
     @Override
-    public void create(String email, String password, String fName, String login) throws Exception {
+    public User create(String email, String password, String fName, String login) throws Exception {
         Pair<Boolean, String> isExist = checkExists(email, login);
         if (!isExist.getKey()) {
             User user = new User(email, password, fName, login);
-            user.setPassword(Cipher.encrypt(password));
+            user.setPassword(PasswordService.hashPassword(password));
             user.addRole(new SimpleGrantedAuthority("ROLE_USER"));
             userRepository.save(user);
+            return user;
         }else {
             throw new Exception(isExist.getValue());
         }
@@ -60,8 +61,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void create(RegistrationFields registrationFields) throws Exception {
-        create(registrationFields.getEmail(), registrationFields.getPassword(), registrationFields.getFirstName(), registrationFields.getLogin());
+    public User create(RegistrationFields registrationFields) throws Exception {
+       return create(registrationFields.getEmail(), registrationFields.getPassword(), registrationFields.getFirstName(), registrationFields.getLogin());
     }
 
     @Override

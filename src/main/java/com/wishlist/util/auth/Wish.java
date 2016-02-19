@@ -1,5 +1,7 @@
-package com.wishlist.model;
+package com.wishlist.util.auth;
 
+import com.wishlist.model.BaseObject;
+import com.wishlist.model.User;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
