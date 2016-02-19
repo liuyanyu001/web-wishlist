@@ -1,10 +1,13 @@
 package com.wishlist.conf;
 
+import com.wishlist.conf.filter.AuthFilter;
 import com.wishlist.conf.filter.AuthenticationSuccessFilter;
 import com.wishlist.service.impl.MongoAuthProvider;
 import com.wishlist.service.impl.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private MongoAuthProvider mongoAuthProvider;
 
+    @Autowired
+    @Qualifier("UserDetailsService")
+    private UserDetailsService userDetailsService;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/webjars/**");
@@ -36,15 +43,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers( "/index", "/auth/**", "/js/**", "/css/**", "/html/**")
+                .permitAll().anyRequest().authenticated();
+
+      /*  http.csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/password/**").permitAll()
-                .and();
+                .antMatchers("/auth*//**").permitAll()
+                .antMatchers("/password*//**").permitAll()
+                .and();*/
 
-        http.formLogin()
+        /*http.formLogin()
                 .failureUrl("/?error")
                 .defaultSuccessUrl("/")
                 .loginPage("/login")
@@ -60,24 +71,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                .permitAll().and();
+                .permitAll().and();*/
 
-        http.rememberMe()
+      /*  http.rememberMe()
                 .authenticationSuccessHandler(getAuthenticationSuccess())
                 .key("MY_BLABLA_KEY")
                 .rememberMeServices(rememberMeServices())
-                .and();
+                .and();*/
 
 
-        http.headers().xssProtection();
+        //http.headers().xssProtection();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(mongoAuthProvider);
+        //auth.authenticationProvider(mongoAuthProvider);
+        auth.userDetailsService(userDetailsService);
     }
 
-    @Bean
+  /*  @Bean
     public RememberMeServices rememberMeServices() {
         // Key must be equal to rememberMe().key()
         TokenBasedRememberMeServices rememberMeServices =
@@ -86,6 +98,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         rememberMeServices.setParameter("remember_me_checkbox");
         rememberMeServices.setTokenValiditySeconds(2678400); // 1month
         return rememberMeServices;
+    }*/
+
+    @Bean
+    public FilterRegistrationBean shallowEtagHeaderFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new AuthFilter());
+        registration.addUrlPatterns("/api/*");
+        return registration;
     }
 
     @Bean UserDetailsService getUserDetailsService(){

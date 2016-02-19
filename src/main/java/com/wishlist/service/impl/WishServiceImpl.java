@@ -1,7 +1,7 @@
 package com.wishlist.service.impl;
 
 import com.wishlist.bean.CreateWishBean;
-import com.wishlist.model.Wish;
+import com.wishlist.util.auth.Wish;
 import com.wishlist.repository.UserRepository;
 import com.wishlist.repository.WishRepository;
 import com.wishlist.service.IWishService;

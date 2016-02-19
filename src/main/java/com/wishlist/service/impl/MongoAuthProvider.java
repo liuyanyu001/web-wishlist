@@ -2,6 +2,7 @@ package com.wishlist.service.impl;
 
 import com.wishlist.repository.UserRepository;
 import com.wishlist.util.Cipher;
+import com.wishlist.util.auth.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,11 +27,10 @@ public class MongoAuthProvider extends AbstractUserDetailsAuthenticationProvider
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         UserDetails loadedUser;
-        String password = Cipher.encrypt((String) authentication.getCredentials());
         try {
             com.wishlist.model.User user = userRepository.findByLogin(username);
-            if (user.getPassword().equals(password)) {
-                loadedUser = new User(username, Cipher.encrypt(user.getPassword()), user.getRoles());
+            if (PasswordService.checkPassword(authentication.getCredentials().toString(), user.getPassword())) {
+                loadedUser = new User(username, PasswordService.hashPassword(user.getPassword()), user.getRoles());
             }else {
                 throw new InternalAuthenticationServiceException("Wrong user password");
             }
