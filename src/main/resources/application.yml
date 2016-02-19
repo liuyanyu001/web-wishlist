@@ -2,6 +2,20 @@ spring:
   profiles.active: prod
   freemarker:
     cache: false
+  token:
+    secret: 9SyECk96oDsTmXfogIieDI0cD/8FpnojlYSUJT5U9I/FGVmBz5oskmjOR8cbXTvoPjX+Pq/T/b1PqpHX0lYm0oCBjXWICA==
+  auth:
+    cron:
+      session:
+        timeout: 0 30 * * * *
+    token:
+      timeout:
+        interval: 30
+    success:
+      url: /auth/success
+    failure:
+      url: /auth/failure
+
 ---
 spring:
   profiles: dev

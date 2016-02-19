@@ -1,9 +1,12 @@
 package com.wishlist.conf;
 
-import com.wishlist.conf.filter.AuthenticationSuccessFilter;
+import com.wishlist.security.impl.AuthenticationFailureHandlerImpl;
+import com.wishlist.security.impl.AuthenticationSuccessHandlerImpl;
+import com.wishlist.security.impl.LogoutSuccessHandlerImpl;
 import com.wishlist.service.impl.MongoAuthProvider;
 import com.wishlist.service.impl.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,10 +18,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
@@ -29,6 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private MongoAuthProvider mongoAuthProvider;
 
+    @Autowired
+    @Qualifier("CustomUserDetailsService")
+    private UserDetailsService userDetailsService;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/webjars/**");
@@ -36,12 +42,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+       // http.addFilterBefore(new MyUsernamePasswordAuthenticationFilter(), MyUsernamePasswordAuthenticationFilter.class);
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/test","/", "/index", "/login", "/js/**", "/css/**", "/html/**")
+                .permitAll().anyRequest().authenticated();
+
+        http.formLogin()
+                .failureHandler(authenticationFailureHandler())
+                .successHandler(authenticationSuccessHandler())
+                .loginPage("/login")
+                .and().logout()
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .permitAll();
+
+       /*
         http.csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/password/**").permitAll()
+                .antMatchers("/auth*//**").permitAll()
+                .antMatchers("/password*//**").permitAll()
                 .and();
 
         http.formLogin()
@@ -67,17 +87,35 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .key("MY_BLABLA_KEY")
                 .rememberMeServices(rememberMeServices())
                 .and();
+         http.headers().xssProtection();
+
+         */
 
 
-        http.headers().xssProtection();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(mongoAuthProvider);
+        //auth.authenticationProvider(mongoAuthProvider);
+        auth.userDetailsService(userDetailsService);
     }
 
     @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new AuthenticationSuccessHandlerImpl();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new AuthenticationFailureHandlerImpl();
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new LogoutSuccessHandlerImpl();
+    }
+
+ /*   @Bean
     public RememberMeServices rememberMeServices() {
         // Key must be equal to rememberMe().key()
         TokenBasedRememberMeServices rememberMeServices =
@@ -86,16 +124,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         rememberMeServices.setParameter("remember_me_checkbox");
         rememberMeServices.setTokenValiditySeconds(2678400); // 1month
         return rememberMeServices;
-    }
+    }*/
 
-    @Bean UserDetailsService getUserDetailsService(){
-        return new UserDetailService();
-    }
 
-    @Bean
+    /*@Bean
     public SavedRequestAwareAuthenticationSuccessHandler getAuthenticationSuccess() {
         AuthenticationSuccessFilter authenticationSuccess = new AuthenticationSuccessFilter();
         authenticationSuccess.setDefaultTargetUrl("/profile/me/");
         return authenticationSuccess;
-    }
+    }*/
 }
