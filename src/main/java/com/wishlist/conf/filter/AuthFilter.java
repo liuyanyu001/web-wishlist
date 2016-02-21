@@ -40,9 +40,11 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
 
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String authHeader = httpRequest.getHeader(AuthUtils.AUTH_HEADER_KEY);
+
 
         if (StringUtils.isBlank(authHeader) || authHeader.split(" ").length != 2) {
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, AUTH_ERROR_MSG);

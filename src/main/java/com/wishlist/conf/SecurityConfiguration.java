@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/api/auth/login").permitAll();
 
-        http.authorizeRequests().antMatchers("/api/*").permitAll()
+        http.authorizeRequests().antMatchers("/api/*").authenticated()
                 .and()
                 .addFilterBefore(corsFilter(), ChannelProcessingFilter.class)
                 .csrf().disable();
