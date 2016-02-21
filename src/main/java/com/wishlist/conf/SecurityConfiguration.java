@@ -1,15 +1,21 @@
 package com.wishlist.conf;
 
 import com.wishlist.conf.filter.AuthFilter;
+import com.wishlist.service.IUserService;
+import com.wishlist.util.auth.AuthUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,6 +27,12 @@ import org.springframework.web.filter.CorsFilter;
 @ComponentScan("com.wishlist")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+
+    @Autowired
+    IUserService userService;
+
+    @Autowired
+    AuthUtils authUtils;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -38,18 +50,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        http.authorizeRequests().antMatchers("/api/auth/login").permitAll();
 
-        http.csrf().disable()
-                .authorizeRequests().and().addFilterBefore(corsFilter(), ChannelProcessingFilter.class)
-                .authorizeRequests().antMatchers("/api/**", "/auth/**", "/js/**", "/css/**", "/html/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/*").permitAll()
+                .and()
+                .addFilterBefore(corsFilter(), ChannelProcessingFilter.class)
+                .csrf().disable();
 
+    }
+
+    @Autowired
+    @Qualifier("UserDetailsService")
+    UserDetailsService userDetailsService;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
     }
 
     @Bean
     public FilterRegistrationBean allowHeaderFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new AuthFilter());
-        registration.addUrlPatterns("/api/*");
+        registration.setFilter(new AuthFilter(authUtils));
+        registration.addUrlPatterns("/api/auth/users/*");
         return registration;
     }
 }

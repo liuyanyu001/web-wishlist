@@ -28,14 +28,14 @@ public class AuthController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping("/auth/login")
+    @RequestMapping("/api/auth/login")
     public ResponseEntity login(@RequestBody @Valid final User user, @Context final HttpServletRequest request)
             throws JOSEException {
         LOG.info("User: '" + user + "'");
         final User foundUser = userService.getByLogin(user.getLogin());
         if (foundUser != null
                 && PasswordService.checkPassword(user.getPassword(), foundUser.getPassword())) {
-            final Token token = AuthUtils.createToken(request.getRemoteHost(), foundUser.getId());
+            final Token token = AuthUtils.createToken(request.getRemoteHost(), foundUser);
             return new ResponseEntity<Token>(token, HttpStatus.OK);
         }
         return new ResponseEntity<String>("Wrong email and/or password", HttpStatus.UNAUTHORIZED);
