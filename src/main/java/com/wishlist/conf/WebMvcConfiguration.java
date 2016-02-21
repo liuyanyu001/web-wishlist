@@ -1,7 +1,9 @@
 package com.wishlist.conf;
 
+import com.wishlist.conf.filter.AuthFilter;
 import com.wishlist.service.impl.MongoAuthProvider;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -28,16 +30,13 @@ public class WebMvcConfiguration extends WebMvcAutoConfiguration.WebMvcAutoConfi
         return provider;
     }
 
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        config.addExposedHeader("Authorization");
-        config.addExposedHeader("Content-Type");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+  /*  @Bean
+    public FilterRegistrationBean shallowEtagHeaderFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new AuthFilter());
+        registration.addUrlPatterns("/api*//**");
+        return registration;
+    }*/
+
+
 }

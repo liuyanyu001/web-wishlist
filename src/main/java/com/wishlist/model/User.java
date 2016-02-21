@@ -1,5 +1,6 @@
 package com.wishlist.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wishlist.util.GrantedAuthorityDeserializer;
@@ -18,6 +19,7 @@ import java.util.Set;
 public class User extends BaseObject{
 
     @Field(value = "name")
+    @JsonProperty(value = "name")
     private String firstName;
 
     private String login;
