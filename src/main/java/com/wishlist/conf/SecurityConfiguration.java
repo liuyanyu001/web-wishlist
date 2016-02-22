@@ -1,12 +1,10 @@
 package com.wishlist.conf;
 
-import com.wishlist.conf.filter.AuthFilter;
 import com.wishlist.service.IUserService;
 import com.wishlist.util.auth.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -68,11 +66,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
-    @Bean
-    public FilterRegistrationBean allowHeaderFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new AuthFilter(authUtils));
-        registration.addUrlPatterns("/api/auth/users/*");
-        return registration;
-    }
 }
