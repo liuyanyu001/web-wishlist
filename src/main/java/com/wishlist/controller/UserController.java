@@ -5,6 +5,7 @@ import com.nimbusds.jwt.ReadOnlyJWTClaimsSet;
 import com.wishlist.model.User;
 import com.wishlist.service.IUserService;
 import com.wishlist.util.auth.AuthUtils;
+import com.wishlist.util.auth.AuthorizeHeaderRequired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class UserController {
     @Autowired private IUserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody
+    public @ResponseBody @AuthorizeHeaderRequired
     ResponseEntity<Object> user(HttpServletRequest request){
         String header = request.getHeader(com.wishlist.util.auth.AuthUtils.AUTH_HEADER_KEY);
         Object o = request.getSession().getAttribute("userBean");
