@@ -28,7 +28,7 @@ public class MongoAuthProvider extends AbstractUserDetailsAuthenticationProvider
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         UserDetails loadedUser;
         try {
-            com.wishlist.model.User user = userRepository.findByLogin(username);
+            com.wishlist.model.User user = userRepository.findByEmail(username);
             if (PasswordService.checkPassword(authentication.getCredentials().toString(), user.getPassword())) {
                 loadedUser = new User(username, PasswordService.hashPassword(user.getPassword()), user.getRoles());
             }else {

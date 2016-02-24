@@ -12,6 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserServiceImpl implements IUserService {
@@ -19,10 +21,10 @@ public class UserServiceImpl implements IUserService {
     @Autowired private UserRepository userRepository;
 
     @Override
-    public User create(String email, String password, String fName, String login) throws Exception {
-        Pair<Boolean, String> isExist = checkExists(email, login);
+    public User create(String email, String password, String fName, String nick) throws Exception {
+        Pair<Boolean, String> isExist = checkExists(email, nick);
         if (!isExist.getKey()) {
-            User user = new User(email, password, fName, login);
+            User user = new User(email, password, fName, nick);
             user.setPassword(PasswordService.hashPassword(password));
             user.addRole(new SimpleGrantedAuthority("ROLE_USER"));
             userRepository.save(user);
@@ -32,21 +34,21 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-    private Pair<Boolean, String> checkExists(String email, String login) {
+    private Pair<Boolean, String> checkExists(String email, String nick) {
         StringBuilder sb = new StringBuilder();
         Pair<Boolean, String> response;
         boolean isExist = false;
 
         if (null != userRepository.findByEmail(email)){
-            sb.append("User with this email ");
+            sb.append("This email ");
             isExist = true;
         }
 
-        if (null != userRepository.findByLogin(login)) {
+        if (null != userRepository.findByNick(nick)) {
             if(isExist){
-                sb.append(" and this login");
+                sb.append("and  nick");
             }else {
-                sb.append("User with this login");
+                sb.append("This nick");
                 isExist = true;
             }
         }
@@ -62,7 +64,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User create(RegistrationFields registrationFields) throws Exception {
-       return create(registrationFields.getEmail(), registrationFields.getPassword(), registrationFields.getFirstName(), registrationFields.getLogin());
+       return create(registrationFields.getEmail(), registrationFields.getPassword(), registrationFields.getFirstName(), registrationFields.getNick());
     }
 
     @Override
@@ -86,7 +88,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User getByLogin(String login) {
-        return userRepository.findByLogin(login);
+    public User getByNick(String nick) {
+        return userRepository.findByNick(nick);
     }
 }

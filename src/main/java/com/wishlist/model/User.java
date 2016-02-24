@@ -22,7 +22,7 @@ public class User extends BaseObject{
     @JsonProperty(value = "name")
     private String firstName;
 
-    private String login;
+    private String nick;
 
     private String password;
 
@@ -36,11 +36,11 @@ public class User extends BaseObject{
 
     public User() {}
 
-    public User(String email, String password, String firstName, String login) {
+    public User(String email, String password, String firstName, String nick) {
         this.password = password;
         this.email = email;
         this.firstName = firstName;
-        this.login = login;
+        this.nick = nick;
     }
 
     public String getPassword() {
@@ -90,11 +90,11 @@ public class User extends BaseObject{
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
+    public String getNick() {
+        return nick;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 }

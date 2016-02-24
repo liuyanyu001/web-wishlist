@@ -3,7 +3,7 @@ package com.wishlist.bean;
 public class RegistrationFields {
 
     private String firstName;
-    private String login;
+    private String nick;
     private String email;
     private String password;
 
@@ -17,12 +17,12 @@ public class RegistrationFields {
         this.firstName = firstName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getNick() {
+        return nick;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
     public String getEmail() {

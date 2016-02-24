@@ -25,12 +25,9 @@ import org.springframework.web.filter.CorsFilter;
 @ComponentScan("com.wishlist")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired IUserService userService;
 
-    @Autowired
-    IUserService userService;
-
-    @Autowired
-    AuthUtils authUtils;
+    @Autowired AuthUtils authUtils;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -49,6 +46,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests().antMatchers("/api/auth/login").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/registration").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/isNickFree").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/isEmailFree").permitAll();
+
 
         http.authorizeRequests().antMatchers("/api/*").authenticated()
                 .and()

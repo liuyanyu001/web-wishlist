@@ -12,7 +12,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     User findByEmail(String email);
 
-    User findByLogin(String login);
+    User findByNick(String nick);
 
     @Query(value = "{online : true}")
     List<User> findAllOnlyOnline();

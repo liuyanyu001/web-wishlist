@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.ws.rs.core.Context;
 
 import com.wishlist.bean.RegistrationFields;
+import com.wishlist.bean.TextResponse;
 import com.wishlist.util.auth.Token;
 import com.wishlist.model.User;
 import com.wishlist.service.IUserService;
@@ -16,10 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthController {
@@ -32,7 +30,7 @@ public class AuthController {
     public ResponseEntity login(@RequestBody @Valid final User user, @Context final HttpServletRequest request)
             throws JOSEException {
         LOG.info("User: '" + user + "'");
-        final User foundUser = userService.getByLogin(user.getLogin());
+        final User foundUser = userService.getByEmail(user.getEmail());
         if (foundUser != null
                 && PasswordService.checkPassword(user.getPassword(), foundUser.getPassword())) {
             final Token token = AuthUtils.createToken(request.getRemoteHost(), foundUser);
@@ -41,13 +39,25 @@ public class AuthController {
         return new ResponseEntity<String>("Wrong email and/or password", HttpStatus.UNAUTHORIZED);
     }
 
-    @RequestMapping(value = "/auth/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "api/auth/registration", method = RequestMethod.POST)
     public ResponseEntity<Object> registration(@RequestBody RegistrationFields registrationFields) {
         try {
             User user = userService.create(registrationFields);
             return new ResponseEntity<Object>(user, HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Object>(new TextResponse(ex.getMessage()), HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @RequestMapping(value = "/auth/isNickFree/{nick}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Boolean> isNickFree(@PathVariable  String nick){
+        return new ResponseEntity<Boolean>(null == userService.getByNick(nick), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/auth/isEmailFree/{email}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Boolean> isEmailFree(@PathVariable  String email){
+        return new ResponseEntity<Boolean>(null == userService.getByEmail(email), HttpStatus.OK);
     }
 }

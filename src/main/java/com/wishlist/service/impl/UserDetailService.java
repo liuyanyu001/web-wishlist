@@ -18,13 +18,13 @@ public class UserDetailService implements org.springframework.security.core.user
             throws UsernameNotFoundException {
 
         com.wishlist.model.User user;
-        user = userRepository.findByLogin(username);
+        user = userRepository.findByEmail(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User " + username + " not found");
         }
 
-        return new User(user.getLogin(), user.getPassword(), user.getRoles());
+        return new User(user.getEmail(), user.getPassword(), user.getRoles());
     }
 
 }
