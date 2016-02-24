@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Component
 public class AuthUtils {
@@ -46,6 +47,14 @@ public class AuthUtils {
     @Autowired
     private SecurityUtil securityUtil;
 
+
+    public static void logout(HttpServletRequest request){
+        SecurityContextHolder.clearContext();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+    }
 
     public boolean isCurrentUserAuth() {
         return securityUtil.isCurrentUserAuth();

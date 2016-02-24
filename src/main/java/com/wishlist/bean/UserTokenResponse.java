@@ -2,16 +2,16 @@ package com.wishlist.bean;
 
 import com.wishlist.model.User;
 
-public class CreateUserResponse {
+public class UserTokenResponse {
 
     private String token;
     private User user;
 
 
-    public CreateUserResponse() {
+    public UserTokenResponse() {
     }
 
-    public CreateUserResponse(String token, User user) {
+    public UserTokenResponse(String token, User user) {
         this.token = token;
         this.user = user;
     }

@@ -3,11 +3,14 @@ package com.wishlist.controller;
 
 import com.nimbusds.jose.JOSEException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.ws.rs.core.Context;
 
 import com.wishlist.bean.RegistrationFields;
 import com.wishlist.bean.TextResponse;
+import com.wishlist.bean.UserTokenResponse;
+import com.wishlist.util.auth.AuthorizeHeaderRequired;
 import com.wishlist.util.auth.Token;
 import com.wishlist.model.User;
 import com.wishlist.service.IUserService;
@@ -17,6 +20,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,7 +39,7 @@ public class AuthController {
         if (foundUser != null
                 && PasswordService.checkPassword(user.getPassword(), foundUser.getPassword())) {
             final Token token = AuthUtils.createToken(request.getRemoteHost(), foundUser);
-            return new ResponseEntity<Token>(token, HttpStatus.OK);
+            return new ResponseEntity<UserTokenResponse>(new UserTokenResponse(token.getToken(), foundUser), HttpStatus.OK);
         }
         return new ResponseEntity<String>("Wrong email and/or password", HttpStatus.UNAUTHORIZED);
     }
@@ -59,5 +64,19 @@ public class AuthController {
     @ResponseBody
     public ResponseEntity<Boolean> isEmailFree(@PathVariable  String email){
         return new ResponseEntity<Boolean>(null == userService.getByEmail(email), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/auth/logout", method = RequestMethod.GET)
+    @ResponseBody @AuthorizeHeaderRequired
+    public ResponseEntity<Boolean> logout(HttpServletRequest request){
+        AuthUtils.logout(request);
+        return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/auth/nick", method = RequestMethod.GET)
+    @ResponseBody @AuthorizeHeaderRequired
+    public ResponseEntity<String> getAuthUserNick(HttpServletRequest request){
+        User o = (User) request.getSession().getAttribute("userBean");
+        return new ResponseEntity<String>(o.getNick(), HttpStatus.OK);
     }
 }

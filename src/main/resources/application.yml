@@ -1,5 +1,5 @@
 spring:
-  profiles.active: dev
+  profiles.active: prod
   freemarker:
     cache: false
 ---

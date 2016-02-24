@@ -47,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/api/auth/login").permitAll();
         http.authorizeRequests().antMatchers("/api/auth/registration").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/logout").permitAll();
         http.authorizeRequests().antMatchers("/api/auth/isNickFree").permitAll();
         http.authorizeRequests().antMatchers("/api/auth/isEmailFree").permitAll();
 
