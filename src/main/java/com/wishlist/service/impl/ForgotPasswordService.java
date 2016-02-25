@@ -1,6 +1,6 @@
 package com.wishlist.service.impl;
 
-import com.wishlist.bean.ForgotPasswordBean;
+import com.wishlist.bean.auth.ForgotPasswordBean;
 import com.wishlist.model.ForgotPassword;
 import com.wishlist.model.User;
 import com.wishlist.repository.ForgotPasswordRepository;

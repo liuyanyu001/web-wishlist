@@ -1,4 +1,4 @@
-package com.wishlist.bean;
+package com.wishlist.bean.auth;
 
 public class RegistrationFields {
 

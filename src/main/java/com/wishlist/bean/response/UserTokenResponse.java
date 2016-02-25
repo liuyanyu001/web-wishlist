@@ -1,4 +1,4 @@
-package com.wishlist.bean;
+package com.wishlist.bean.response;
 
 import com.wishlist.model.User;
 

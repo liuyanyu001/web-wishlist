@@ -1,6 +1,6 @@
 package com.wishlist.service;
 
-import com.wishlist.bean.RegistrationFields;
+import com.wishlist.bean.auth.RegistrationFields;
 import com.wishlist.model.User;
 
 /**

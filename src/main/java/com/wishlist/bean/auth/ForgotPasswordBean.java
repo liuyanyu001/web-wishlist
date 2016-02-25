@@ -1,4 +1,4 @@
-package com.wishlist.bean;
+package com.wishlist.bean.auth;
 
 import com.wishlist.model.ForgotPassword;
 import com.wishlist.util.DateUtil;

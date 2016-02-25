@@ -3,13 +3,12 @@ package com.wishlist.controller;
 
 import com.nimbusds.jose.JOSEException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.ws.rs.core.Context;
 
-import com.wishlist.bean.RegistrationFields;
-import com.wishlist.bean.TextResponse;
-import com.wishlist.bean.UserTokenResponse;
+import com.wishlist.bean.auth.RegistrationFields;
+import com.wishlist.bean.response.TextResponse;
+import com.wishlist.bean.response.UserTokenResponse;
 import com.wishlist.util.auth.AuthorizeHeaderRequired;
 import com.wishlist.util.auth.Token;
 import com.wishlist.model.User;
@@ -20,8 +19,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

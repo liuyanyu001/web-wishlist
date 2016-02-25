@@ -1,5 +1,6 @@
 package com.wishlist.controller;
 
+import com.wishlist.bean.profile.UserFollowerStatistic;
 import com.wishlist.model.User;
 import com.wishlist.service.IUserService;
 import com.wishlist.service.impl.FollowerService;
@@ -25,8 +26,22 @@ public class FollowController {
     ResponseEntity<Boolean> makeFollowLink(@PathVariable String nick, HttpServletRequest request){
         User authUser = (User) request.getSession().getAttribute("userBean");
         User userToFollow = userService.getByNick(nick);
-        Boolean result = followerService.makeLink(authUser.getId(), userToFollow.getId());
-        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+        followerService.makeLink(authUser.getId(), userToFollow.getId());
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/unlink/{nick}")
+    public @ResponseBody @AuthorizeHeaderRequired
+    ResponseEntity<Boolean> unFollowLink(@PathVariable String nick, HttpServletRequest request){
+        User authUser = (User) request.getSession().getAttribute("userBean");
+        User userToFollow = userService.getByNick(nick);
+        followerService.unLink(authUser.getId(), userToFollow.getId());
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{nick}/statistic", method = RequestMethod.GET) @AuthorizeHeaderRequired
+    public ResponseEntity<UserFollowerStatistic> getFollowerStatistic(@PathVariable String nick,
+                                                                      @RequestParam(value = "full",defaultValue = "false")Boolean full){
+        return new ResponseEntity<UserFollowerStatistic>(followerService.getFollowerStatistic(nick, full), HttpStatus.OK);
+    }
 }

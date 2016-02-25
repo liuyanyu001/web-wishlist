@@ -1,6 +1,6 @@
 package com.wishlist.service.impl;
 
-import com.wishlist.bean.RegistrationFields;
+import com.wishlist.bean.auth.RegistrationFields;
 import com.wishlist.model.User;
 import com.wishlist.repository.UserRepository;
 import com.wishlist.service.IUserService;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional

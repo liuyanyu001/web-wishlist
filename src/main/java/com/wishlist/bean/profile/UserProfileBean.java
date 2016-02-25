@@ -1,11 +1,9 @@
-package com.wishlist.bean;
+package com.wishlist.bean.profile;
 
-import com.wishlist.model.Follower;
 import com.wishlist.model.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,8 +22,7 @@ public class UserProfileBean{
 
     boolean followedByMe;
 
-    private List<User> followers;
-    private List<User> followed;
+    private UserFollowerStatistic followerStatistic;
 
     /**
 
@@ -90,19 +87,12 @@ public class UserProfileBean{
         this.followedByMe = followedByMe;
     }
 
-    public List<User> getFollowers() {
-        return followers;
+
+    public UserFollowerStatistic getFollowerStatistic() {
+        return followerStatistic;
     }
 
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
-    }
-
-    public List<User> getFollowed() {
-        return followed;
-    }
-
-    public void setFollowed(List<User> followed) {
-        this.followed = followed;
+    public void setFollowerStatistic(UserFollowerStatistic followerStatistic) {
+        this.followerStatistic = followerStatistic;
     }
 }

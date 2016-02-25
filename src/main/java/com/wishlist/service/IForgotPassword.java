@@ -1,6 +1,6 @@
 package com.wishlist.service;
 
-import com.wishlist.bean.ForgotPasswordBean;
+import com.wishlist.bean.auth.ForgotPasswordBean;
 
 public interface IForgotPassword {
 
