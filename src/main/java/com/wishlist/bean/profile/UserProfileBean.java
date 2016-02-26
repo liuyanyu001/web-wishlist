@@ -20,8 +20,6 @@ public class UserProfileBean{
 
     boolean me;
 
-    boolean followedByMe;
-
     private UserFollowerStatistic followerStatistic;
 
     /**
@@ -78,15 +76,6 @@ public class UserProfileBean{
     public void setMe(boolean me) {
         this.me = me;
     }
-
-    public boolean isFollowedByMe() {
-        return followedByMe;
-    }
-
-    public void setFollowedByMe(boolean followedByMe) {
-        this.followedByMe = followedByMe;
-    }
-
 
     public UserFollowerStatistic getFollowerStatistic() {
         return followerStatistic;

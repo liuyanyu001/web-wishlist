@@ -2,10 +2,9 @@ package com.wishlist.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.ReadOnlyJWTClaimsSet;
-import com.wishlist.bean.profile.UserProfileBean;
+import com.wishlist.bean.profile.UserFollowerStatistic;
 import com.wishlist.model.User;
 import com.wishlist.service.IUserService;
-import com.wishlist.service.impl.FollowerService;
 import com.wishlist.util.auth.AuthUtils;
 import com.wishlist.util.auth.AuthorizeHeaderRequired;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 
 @RestController
-@RequestMapping(value = "/api/auth/users")
+@RequestMapping(value = "/api/users")
 @SessionAttributes("userBean")
 public class UserController {
 
     @Autowired private IUserService userService;
-    @Autowired private FollowerService followerService;
 
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody @AuthorizeHeaderRequired
@@ -40,26 +38,34 @@ public class UserController {
 
     public @ResponseBody @AuthorizeHeaderRequired
     @RequestMapping(value = "/nick/{nick}", method = RequestMethod.GET)
-    ResponseEntity<Object> user(@PathVariable String nick, HttpServletRequest request){
-        User authUser = (User) request.getSession().getAttribute("userBean");
+    ResponseEntity<Object> user(@PathVariable String nick){
         try {
-            User user = userService.getByNick(nick);
-            if (null == user){
-                throw new Exception("User not found");
-            }
-
-            UserProfileBean profileBean = new UserProfileBean(user);
-            profileBean.setMe(user.getId().equals(authUser.getId()));
-            if (!profileBean.isMe()){
-                boolean isIFollowing = followerService.isFollowedForUser(user.getId(), authUser.getId());
-                profileBean.setFollowedByMe(isIFollowing);
-            }
-            profileBean.setFollowerStatistic(followerService.getFollowerStatistic(profileBean.getNick(), false));
-            return new ResponseEntity<>(profileBean, HttpStatus.OK);
+            return new ResponseEntity<>(userService.getProfileByNick(nick), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<Object>("Somethink went wrong", HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @RequestMapping(value = "/follow/{nick}")
+    public @ResponseBody @AuthorizeHeaderRequired
+    ResponseEntity<Boolean> makeFollowLink(@PathVariable String nick, HttpServletRequest request){
+        userService.follow(nick);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/unfollow/{nick}")
+    public @ResponseBody @AuthorizeHeaderRequired
+    ResponseEntity<Boolean> unFollowLink(@PathVariable String nick, HttpServletRequest request){
+        User authUser = (User) request.getSession().getAttribute("userBean");
+        userService.unfollow(nick);
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{nick}/statistic", method = RequestMethod.GET) @AuthorizeHeaderRequired
+    public ResponseEntity<UserFollowerStatistic> getFollowerStatistic(@PathVariable String nick,
+                                                                      @RequestParam(value = "full",defaultValue = "false")Boolean full){
+        return new ResponseEntity<UserFollowerStatistic>(userService.getStatistic(nick), HttpStatus.OK);
     }
 
 }

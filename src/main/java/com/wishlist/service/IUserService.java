@@ -1,6 +1,8 @@
 package com.wishlist.service;
 
 import com.wishlist.bean.auth.RegistrationFields;
+import com.wishlist.bean.profile.UserFollowerStatistic;
+import com.wishlist.bean.profile.UserProfileBean;
 import com.wishlist.model.User;
 
 /**
@@ -14,4 +16,10 @@ public interface IUserService {
     User getByName(String name);
     User getById(String id);
     User getByNick(String nick);
+    UserProfileBean getProfileByNick(String nick) throws Exception;
+
+    void follow(String followerNick);
+
+    void unfollow(String followingNick);
+    UserFollowerStatistic getStatistic(String nick);
 }

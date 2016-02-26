@@ -1,6 +1,8 @@
 package com.wishlist.util.auth;
 
 import com.wishlist.bean.auth.ForgotPasswordBean;
+import com.wishlist.model.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,12 @@ public class SecurityUtil {
         } else {
             return true;
         }
+    }
+
+    public User getAuthUser(){
+        UserAuthentication auth = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication());
+        User user = auth.getDetails();
+        return user;
     }
 
     public boolean isTokenExpired(ForgotPasswordBean forgotPasswordBean){

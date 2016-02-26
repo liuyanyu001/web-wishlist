@@ -11,10 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Document(collection = "users")
 public class User extends BaseObject{
@@ -34,6 +31,9 @@ public class User extends BaseObject{
     @JsonSerialize(contentUsing = GrantedAuthoritySerializer.class)
     @JsonDeserialize(contentUsing = GrantedAuthorityDeserializer.class)
     private Set<GrantedAuthority> roles = new HashSet<>();
+
+    @DBRef
+    private Set<User> following = new HashSet<>();
 
     public User() {}
 
@@ -97,5 +97,39 @@ public class User extends BaseObject{
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+    public void following(User user){
+        if (notContains(user)){
+            this.following.add(user);
+        }
+    }
+
+    private boolean notContains(User user) {
+        return 0 == this.following.stream().filter(u->u.getId().equals(user.getId())).count();
+    }
+
+
+    public void endFollowing(User user){
+        Iterator<User> iterator = following.iterator();
+        removeUser(user, iterator);
+    }
+
+    private void removeUser(User user, Iterator<User> iterator) {
+        while (iterator.hasNext()){
+            if (iterator.next().getId().equals(user.getId())){
+                iterator.remove();
+            }
+        }
+    }
+
+    public boolean isFollowingFor(User user){
+        long count = following.stream().filter(u->u.getNick().equals(user.getNick())).count();
+        return count != 0;
     }
 }
